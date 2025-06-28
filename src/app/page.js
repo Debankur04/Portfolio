@@ -1,15 +1,13 @@
 'use client'
-import { BookDown, FolderKanban, Home, Pen, GraduationCap, Send, Trophy, Wrench, Github, Linkedin, Twitter, Mail, Phone, MapPin, Plus, X } from 'lucide-react'
+import { BookDown, FolderKanban, Home, Pen, GraduationCap, Send, Trophy, Wrench, Github, Linkedin,  Mail, Phone, MapPin, Code, Database, Globe, Smartphone, Server, Zap } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import emailjs from '@emailjs/browser';
+import { Slider } from '@/components/ui/slider';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home')
-  const [selectedTechs, setSelectedTechs] = useState([])
-  const [animatedAchievements, setAnimatedAchievements] = useState(0)
   const [animatedEducation, setAnimatedEducation] = useState(0)
-  
-  const [formStatus, setFormStatus] = useState('')
+
 
   const [form, setForm] = useState({
     name: '',
@@ -38,27 +36,26 @@ const Portfolio = () => {
   };
 
   // Tech stack data with combination logic
-  const techStack = {
-    html: { name: 'HTML', logo: '🌐', category: 'frontend' },
-    css: { name: 'CSS', logo: '🎨', category: 'frontend' },
-    js: { name: 'JavaScript', logo: '⚡', category: 'frontend' },
-    react: { name: 'React', logo: '⚛️', category: 'frontend' },
-    node: { name: 'Node.js', logo: '🟢', category: 'backend' },
-    python: { name: 'Python', logo: '🐍', category: 'backend' },
-    mongodb: { name: 'MongoDB', logo: '🍃', category: 'database' },
-    mysql: { name: 'MySQL', logo: '🐬', category: 'database' }
-  }
+  const stack = [
+    { title: 'Nextjs', skill: 75, icon: <Code className="w-6 h-6" />, color: 'from-blue-500 to-cyan-500' },
+    { title: 'Expressjs', skill: 68, icon: <Server className="w-6 h-6" />, color: 'from-green-500 to-emerald-500' },
+    { title: 'Django', skill: 45, icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django"  className="w-6 h-6 mx-auto "/>, color: 'from-pink-500 to-rose-500' },
+    { title: 'Database', skill: 72, icon: <Database className="w-6 h-6" />, color: 'from-purple-500 to-violet-500' },
+    { title: 'Web Design', skill: 70, icon: <Globe className="w-6 h-6" />, color: 'from-orange-500 to-red-500' },
+    { title: 'Performance', skill: 72, icon: <Zap className="w-6 h-6" />, color: 'from-yellow-500 to-amber-500' }
+  ];
 
-  const combinations = {
-    'css,html,js': { name: 'Frontend Developer', logo: '💻', description: 'Web Frontend Specialist' },
-    'node,python': { name: 'Backend Developer', logo: '⚙️', description: 'Server-side Expert' },
-    'css,html,js,node': { name: 'Full Stack Developer', logo: '🚀', description: 'Complete Web Solution' },
-    'node,react': { name: 'MERN Stack', logo: '🌟', description: 'Modern Web Stack' },
-    'mongodb,mysql': { name: 'Database Expert', logo: '🗄️', description: 'Data Management Specialist' },
-    'js,react': { name: 'React Developer', logo: '⚛️', description: 'Modern Frontend Expert' },
-    'node,mongodb': { name: 'Backend Stack', logo: '🔧', description: 'Server & Database Combo' },
-    'css,js': { name: 'Frontend Core', logo: '🎨', description: 'Styling & Logic Expert' }
-  }
+  const getSkillColor = (skill) => {
+    if (skill >= 75) return 'from-green-400 to-emerald-500';
+    if (skill >= 50) return 'from-yellow-400 to-orange-500';
+    return 'from-red-400 to-pink-500';
+  };
+
+  const getSkillLabel = (skill) => {
+    if (skill >= 75) return 'Expert';
+    if (skill >= 50) return 'Intermediate';
+    return 'Beginner';
+  };
 
   const projects = [
     {
@@ -139,39 +136,9 @@ const Portfolio = () => {
     }
   }, [activeSection])
 
-  const handleTechClick = (techKey) => {
-    setSelectedTechs(prev => {
-      const newSelection = prev.includes(techKey) 
-        ? prev.filter(t => t !== techKey)
-        : [...prev, techKey]
-      return newSelection
-    })
-  }
-
-  const getCombinationResult = () => {
-    const sortedKeys = selectedTechs.sort().join(',')
-    return combinations[sortedKeys]
-  }
-
   const scrollToSection = (section) => {
     setActiveSection(section)
     document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setFormStatus('sending')
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setFormStatus('success')
-      setForm({ name: '', email: '', message: '' })
-      setTimeout(() => setFormStatus(''), 3000)
-    }, 1000)
-  }
-
-  const handleInputChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
   }
 
   return (
@@ -210,7 +177,7 @@ const Portfolio = () => {
                   {/* Card Header */}
                   <div className="bg-gradient-to-r from-slate-600 to-slate-800 text-white p-4">
                     <div className="flex items-center justify-between">
-                      <h1 className="text-2xl font-bold">Hunter's License</h1>
+                      <h1 className="text-2xl font-bold">Coder's License</h1>
                       <div className="text-right">
                         <div className="text-sm opacity-80">Issued by</div>
                         <div className="font-semibold">Developer's Guild</div>
@@ -264,7 +231,7 @@ const Portfolio = () => {
                           <div className="space-y-3">
                             <div>
                               <label className="text-sm font-medium text-slate-600 block">Power Level</label>
-                              <div className="bg-gradient-to-r from-blue-100 to-blue-200 p-2 rounded border font-bold text-xl text-blue-800">952</div>
+                              <div className="bg-gradient-to-r from-blue-100 to-blue-200 p-2 rounded border font-bold text-xl text-blue-800">52</div>
                             </div>
                             
                             <div>
@@ -350,61 +317,109 @@ const Portfolio = () => {
       </section>
 
       {/* Tech Stack Section */}
-      <section id="techstack" className="min-h-screen pt-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-white text-center mb-12">Tech Stack</h2>
-          
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 mb-8">
-            <h3 className="text-2xl font-semibold text-white mb-6">Select Technologies to Combine</h3>
-            
-            {/* Tech Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              {Object.entries(techStack).map(([key, tech]) => (
-                <div
-                  key={key}
-                  onClick={() => handleTechClick(key)}
-                  className={`p-4 rounded-xl cursor-pointer transition-all duration-300 border-2 ${
-                    selectedTechs.includes(key)
-                      ? 'bg-red-500/30 border-red-400 scale-105'
-                      : 'bg-white/10 border-white/20 hover:bg-white/20'
-                  }`}
-                >
-                  <div className="text-4xl mb-2 text-center">{tech.logo}</div>
-                  <div className="text-white text-center font-medium">{tech.name}</div>
-                </div>
-              ))}
-            </div>
+      <div className="min-h-screen  py-16 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent mb-4">
+            Tech Stack
+          </h1>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Explore my technical expertise across various technologies and frameworks
+          </p>
+        </div>
 
-            {/* Combination Result */}
-            {selectedTechs.length > 0 && (
-              <div className="bg-gradient-to-r from-red-500/20 to-red-600/20 rounded-xl p-6 border border-red-400/30">
-                <div className="flex items-center gap-4">
-                  <div className="text-2xl">
-                    {selectedTechs.map(tech => techStack[tech].logo).join(' + ')}
+        {/* Tech Stack Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {stack.map((item, index) => (
+            <div 
+              key={index} 
+              className="group relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20"
+              style={{
+                animationDelay: `${index * 150}ms`
+              }}
+            >
+              {/* Gradient Background Effect */}
+              <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+              
+              {/* Content */}
+              <div className="relative z-10">
+                {/* Icon and Title */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className={`p-3 rounded-2xl bg-gradient-to-br ${item.color} text-white shadow-lg`}>
+                    {item.icon}
                   </div>
-                  <Plus className="text-white w-6 h-6" />
-                  <div className="text-4xl">{getCombinationResult()?.logo || '❓'}</div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-white">{item.title}</h2>
+                    <span className={`text-sm px-3 py-1 rounded-full bg-gradient-to-r ${getSkillColor(item.skill)} text-white font-medium`}>
+                      {getSkillLabel(item.skill)}
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-4">
-                  <h4 className="text-xl font-semibold text-white">
-                    {getCombinationResult()?.name || 'Custom Stack'}
-                  </h4>
-                  <p className="text-red-100">
-                    {getCombinationResult()?.description || 'Unique combination of technologies'}
-                  </p>
+
+                {/* Skill Progress */}
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-300 text-sm font-medium">Proficiency</span>
+                    <span className="text-white text-lg font-bold">{item.skill}%</span>
+                  </div>
+                  
+                  {/* Custom Progress Bar */}
+                  <div className="relative h-3 bg-white/10 rounded-full overflow-hidden">
+                    <div 
+                      className={`absolute top-0 left-0 h-full bg-gradient-to-r ${getSkillColor(item.skill)} rounded-full transition-all duration-1000 ease-out`}
+                      style={{ width: `${item.skill}%` }}
+                    >
+                      <div className="absolute inset-0 bg-white/20 animate-pulse rounded-full"></div>
+                    </div>
+                  </div>
                 </div>
-                <button
-                  onClick={() => setSelectedTechs([])}
-                  className="mt-4 bg-red-500/20 hover:bg-red-500/30 px-4 py-2 rounded-lg text-white transition-colors duration-300 flex items-center gap-2"
-                >
-                  <X className="w-4 h-4" />
-                  Clear Selection
-                </button>
+
+                {/* Skill Level Indicator */}
+                <div className="mt-4 flex justify-center">
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <div 
+                        key={i}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                          i < Math.floor(item.skill / 20) 
+                            ? `bg-gradient-to-r ${getSkillColor(item.skill)}` 
+                            : 'bg-white/20'
+                        }`}
+                      ></div>
+                    ))}
+                  </div>
+                </div>
               </div>
-            )}
+
+              {/* Hover Glow Effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom Stats */}
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="text-center p-6 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10">
+            <div className="text-4xl font-bold text-white mb-2">
+              {Math.round(stack.reduce((acc, item) => acc + item.skill, 0) / stack.length)}%
+            </div>
+            <div className="text-gray-300">Average Proficiency</div>
+          </div>
+          <div className="text-center p-6 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10">
+            <div className="text-4xl font-bold text-white mb-2">{stack.length}</div>
+            <div className="text-gray-300">Technologies</div>
+          </div>
+          <div className="text-center p-6 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10">
+            <div className="text-4xl font-bold text-white mb-2">
+              {stack.filter(item => item.skill >= 75).length}
+            </div>
+            <div className="text-gray-300">Expert Level</div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+
 
       {/* Workshop/Projects Section */}
       <section id="workshop" className="min-h-screen pt-24 px-6">
