@@ -1,19 +1,87 @@
 'use client'
 import { BookDown, FolderKanban, Home, Pen, GraduationCap, Send, Trophy, Wrench, Github, Linkedin,  Mail, Phone, MapPin, Code, Database, Globe, Smartphone, Server, Zap } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
+import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
 import emailjs from '@emailjs/browser';
-import { Slider } from '@/components/ui/slider';
+import Image from 'next/image';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home')
   const [animatedEducation, setAnimatedEducation] = useState(0)
 
+  
 
   const [form, setForm] = useState({
     name: '',
     email: '',
     message: ''
   });
+
+
+  
+  // const achievements = [
+  //   { year: '2024', title: 'Won my first coding competition', description: 'Won Frontend Competition at GNIT' },
+  //   { year: '2024', title: 'First Hackathon', description: 'Won best fintech product at IEM Hackathon' },
+  //   { year: '2024', title: 'Won Second coding competition', description: 'Won Frontend Competition at GNIT' },
+  //   { year: '2024', title: 'Came 4th at in college Hackathon', description: '4th Position at JISU Hackathon' },
+  //   { year: '2024-25', title: 'Hackathon frenzy', description: 'Won 4 Hackathons' }
+  // ]
+  const content = [
+  {
+    title: "1st Place – Frontend Coding Challenge (2024)",
+description: "Secured 1st position in the Frontend Web Development Competition hosted by GNIT in 2024, outperforming peers through responsive UI design, optimized performance, and clean code practices.",
+    content: (
+      <div className="flex h-full w-full items-center justify-center text-white">
+        <img
+          src="/web20.jpeg"
+          width={300}
+          height={300}
+          className="h-full w-full object-cover"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+    {
+    title: "First Hackathon Win – Best Fintech Product",
+description: "Built a complete fintech solution in just 24 hours at the IEM Hackathon and bagged the 'Best Fintech Product' award. An intense, exciting start to my hackathon journey!",
+    content: (
+      <div className="flex h-full w-full items-center justify-center text-white">
+        <img
+          src="/IEM.jpeg"
+          width={300}
+          height={300}
+          className="h-full w-full object-cover"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Back-to-Back Frontend Champion (2025)",
+description: "Won the GNIT Frontend Competition for the second year in a row! Super proud of our team’s consistency, creativity, and clean code. Let’s see if we can make it a hat-trick next year!",
+    content: (
+      <div className="flex h-full w-full items-center justify-center text-white">
+        <img
+          src="/web30.jpeg"
+          width={300}
+          height={300}
+          className="h-full w-full object-cover"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+  {
+  title: "Almost a Podium Finish 🏁",
+  description: "Came 4th in our college hackathon — close enough to smell the medal! Also won 4 other hackathons, so we’re doing just fine 😄",
+  content: (
+    <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white text-center p-4">
+      No trophy pic... we were too busy debugging 🐛💻
+    </div>
+  ),
+},
+];
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -82,14 +150,6 @@ const Portfolio = () => {
       tags: ['NextJS', 'Django', 'PostgreSQL'],
       github: 'https://github.com/Debankur04/Chatify_Backend'
     }
-  ]
-
-  const achievements = [
-    { year: '2024', title: 'Won my first coding competition', description: 'Won Frontend Competition at GNIT' },
-    { year: '2024', title: 'First Hackathon', description: 'Won best fintech product at IEM Hackathon' },
-    { year: '2024', title: 'Won Second coding competition', description: 'Won Frontend Competition at GNIT' },
-    { year: '2024', title: 'Came 4th at in college Hackathon', description: '4th Position at JISU Hackathon' },
-    { year: '2024-25', title: 'Hackathon frenzy', description: 'Won 4 Hackathons' }
   ]
 
   const education = [
@@ -192,7 +252,7 @@ const Portfolio = () => {
                       {/* Left Section - Photo */}
                       <div className="space-y-4">
                         <div className="border-4 border-slate-300 rounded-lg overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 aspect-square flex items-center justify-center">
-                          <div className="text-8xl">👨‍💻</div>
+                          <Image src='/face_image.jpeg' height='300' width='300' alt='Image'/>
                         </div>
                         
                         {/* Rank Badge */}
@@ -240,8 +300,8 @@ const Portfolio = () => {
                             </div>
                             
                             <div>
-                              <label className="text-sm font-medium text-slate-600 block">Cleared Dungeons</label>
-                              <div className="bg-gradient-to-r from-purple-100 to-purple-200 p-2 rounded border font-bold text-lg text-purple-800">6</div>
+                              <label className="text-sm font-medium text-slate-600 block">Participated / Win Hackathons</label>
+                              <div className="bg-gradient-to-r from-purple-100 to-purple-200 p-2 rounded border font-bold text-lg text-purple-800">10+ / 4</div>
                             </div>
                             
                             <div>
@@ -467,7 +527,7 @@ const Portfolio = () => {
             {/* Timeline Line */}
             <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-400 to-red-600"></div>
             
-            {achievements.map((achievement, index) => (
+            {education.map((item, index) => (
               <div key={index} className="relative flex items-start mb-12">
                 {/* Timeline Dot */}
                 <div className="absolute left-6 w-4 h-4 bg-red-500 rounded-full border-4 border-white shadow-lg"></div>
@@ -476,11 +536,13 @@ const Portfolio = () => {
                 <div className="ml-16 bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
                   <div className="flex items-center gap-4 mb-2">
                     <span className="bg-red-500/20 text-red-200 px-3 py-1 rounded-full text-sm font-medium">
-                      {achievement.year}
+                      {item.year}
                     </span>
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{achievement.title}</h3>
-                  <p className="text-gray-200">{achievement.description}</p>
+                  <h3 className="text-xl font-semibold text-white mb-2">{item.title}</h3>
+                  <p className="text-gray-200">{item.year}</p>
+                  <p className="text-gray-200">{item.institution}</p>
+                  <p className="text-gray-200">{item.result}</p>
                 </div>
               </div>
             ))}
@@ -489,45 +551,20 @@ const Portfolio = () => {
       </section>
 
       {/* Highlights Section */}
-      <section id="highlights" className="min-h-screen pt-24 px-6">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-white text-center mb-12">Highlights</h2>
+      <section id="highlights" className="pt-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-6xl font-bold text-white text-center mb-16">
+            Highlights
+          </h2>
           
-          <div className="relative">
-            {/* Animated Line */}
-            <div className="absolute left-8 top-0 w-0.5 bg-gray-600 h-full"></div>
-            <div 
-              className="absolute left-8 top-0 w-0.5 bg-gradient-to-b from-red-400 to-red-600 transition-all duration-1000 ease-out"
-              style={{ height: `${((animatedEducation + 1) / education.length) * 100}%` }}
-            ></div>
-            
-            {education.map((item, index) => (
-              <div 
-                key={index} 
-                className={`relative flex items-start mb-12 transition-all duration-500 ${
-                  index <= animatedEducation ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
-                }`}
-                style={{ transitionDelay: `${index * 200}ms` }}
-              >
-                {/* Dot */}
-                <div className={`absolute left-6 w-4 h-4 rounded-full border-4 border-white shadow-lg transition-all duration-300 ${
-                  index <= animatedEducation ? 'bg-red-500 scale-100' : 'bg-gray-400 scale-75'
-                }`}></div>
-                
-                {/* Content */}
-                <div className="ml-16 bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20">
-                  <div className="flex items-center gap-4 mb-2">
-                    <span className="bg-red-500/20 text-red-200 px-3 py-1 rounded-full text-sm font-medium">
-                      {item.year}
-                    </span>
-                    <Trophy className="w-5 h-5 text-yellow-400" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{item.title}</h3>
-                  <p className="text-gray-200">{item.institution}</p>
-                  <p className="text-gray-200 font-medium">{item.result}</p>
-                </div>
+          {/* Glassmorphism Container for StickyScroll */}
+          <div className="bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl p-8">
+            <div className="w-full">
+              {/* This is where your StickyScroll component would go */}
+              <div className="sticky-scroll-container">
+                <StickyScroll content={content}/>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
@@ -564,7 +601,7 @@ const Portfolio = () => {
         value={form.name}
         onChange={(e) => setForm({ ...form, name: e.target.value })}
         required
-        className="border p-2 rounded"
+        className="border p-2 rounded text-white"
       />
       <input
         type="email"
@@ -573,7 +610,7 @@ const Portfolio = () => {
         value={form.email}
         onChange={(e) => setForm({ ...form, email: e.target.value })}
         required
-        className="border p-2 rounded"
+        className="border p-2 rounded text-white"
       />
       <textarea
         name="message"
@@ -581,7 +618,7 @@ const Portfolio = () => {
         value={form.message}
         onChange={(e) => setForm({ ...form, message: e.target.value })}
         required
-        className="border p-2 rounded"
+        className="border p-2 rounded text-white"
       />
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
         Send
